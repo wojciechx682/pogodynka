@@ -14,7 +14,7 @@ class Measurement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'measurements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
@@ -139,4 +139,6 @@ class Measurement
 
         return $this;
     }
+
+
 }

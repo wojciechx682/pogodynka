@@ -8,3 +8,13 @@ weather_in_city:
   requirements:
     city: \d+
 
+#location_index:
+#  path:       /location
+#  controller: App\Controller\LocationController:index
+
+#measurement_index:
+#  path:       /measurement
+#  controller: App\Controller\MeasurementController:index
+
+
+

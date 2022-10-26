@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Measurement index{% endblock %}
+
+{% block body %}
+    <h1>Measurement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Celsius</th>
+                <th>Status</th>
+                <th>Humidity</th>
+                <th>Sunrise</th>
+                <th>Sunset</th>
+                <th>Windspeed</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <a href="{{ path('app_location_index') }}">Locations</a><br>
+
+        {% for measurement in measurements %}
+            <tr>
+                <td>{{ measurement.id }}</td>
+                <td>{{ measurement.date ? measurement.date|date('Y-m-d') : '' }}</td>
+                <td>{{ measurement.celsius }}</td>
+                <td>{{ measurement.status }}</td>
+                <td>{{ measurement.humidity }}</td>
+                <td>{{ measurement.sunrise ? measurement.sunrise|date('H:i:s') : '' }}</td>
+                <td>{{ measurement.sunset ? measurement.sunset|date('H:i:s') : '' }}</td>
+                <td>{{ measurement.windspeed }}</td>
+                <td>
+                    <a href="{{ path('app_measurement_show', {'id': measurement.id}) }}">show</a>
+                    <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_measurement_new') }}">Create new</a>
+{% endblock %}

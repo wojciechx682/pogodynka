@@ -1,0 +1,74 @@
+
+
+
+
+# https://symfony.com/doc/current/reference/constraints/Range.html
+
+# Walidatory :
+
+App\Entity\Location:
+  properties:       # walidacja właściwości
+    latitude:
+      - Range:
+          min: -90 # szerokość geograficzna
+          max: 90
+          groups: ['new', 'edit'] # grupy walidacyjne
+      - NotBlank: ~               # cant be empty
+    longitude:
+      - Range:
+          min: -180 # długość geograficzna
+          max: 180
+          groups: ['new', 'edit']
+      - NotBlank: ~               # cant be empty
+    city:
+      - NotBlank: ~ # cant be empty
+    country:
+      - NotBlank: ~ # cant be empty
+
+App\Entity\Measurement:
+  properties:       # walidacja właściwości
+    date:
+      - Date: ~
+        #  groups: ['new', 'edit']
+        #          format: Y-m-d
+      - NotBlank: ~ # cant be empty
+
+
+    celsius:
+      - Range:
+          min: -273.15  # minimalna temperatura
+          max: 55.0
+          groups: ['new', 'edit'] # grupy walidacyjne
+      - NotBlank: ~ # cant be empty
+      #- Type:
+      #    type: double
+      #    groups: ['new', 'edit'] # grupy walidacyjne
+#    longitude:
+#      - Range:
+#          min: -180 # długość geograficzna
+#          max: 180
+#          groups: ['mew', 'edit'] # grupy walidacyjne
+
+    sunrise:
+      - Time: ~
+
+    sunset:
+      - Time: ~
+
+    windspeed:
+      - NotBlank: ~ # cant be empty
+      - Length:
+          max: 8
+    humidity:
+      - NotBlank: ~ # cant be empty
+      - Length:
+          max: 8
+    status:
+      - NotBlank: ~ # cant be empty
+      - Length:
+          min: 2
+          max: 30
+
+
+
+
