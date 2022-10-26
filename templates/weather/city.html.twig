@@ -30,7 +30,7 @@
         <h1>{{ location.city }}, {{ location.country }}</h1>
         <ul>
             {% for measurement in measurements %}
-                <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.celsius }}&deg;C</li>
+                <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.celsius }}&deg;C - {{ measurement.status }} - Wilgotność: {{ measurement.humidity }} - Wschód słońca: {{ measurement.sunrise | date('H-i-s')}} - Zachód słońca: {{ measurement.sunset | date('H-i-s')}} - Prędkość wiatru: {{ measurement.windspeed }}</li>
             {% endfor %}
         </ul>
     </div>
