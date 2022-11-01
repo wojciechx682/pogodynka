@@ -21,7 +21,11 @@
         </thead>
         <tbody>
 
-        <a href="{{ path('app_location_index') }}">Locations</a><br>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('app_location_index') }}">Locations</a><br>
+        {% endif %}
+
+        <!-- <a href="{{ path('app_location_index') }}">Locations</a><br> -->
 
         {% for measurement in measurements %}
             <tr>

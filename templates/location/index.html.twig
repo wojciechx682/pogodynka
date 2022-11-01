@@ -4,6 +4,8 @@
 
 {% block body %}
 
+
+
     <h1>Location index</h1>
 
     <table class="table">
@@ -19,7 +21,14 @@
         </thead>
         <tbody>
 
-        <a href="{{ path('app_measurement_index') }}">Measurements</a>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('app_measurement_index') }}">Measurements</a>
+        {% endif %}
+
+        <!-- <a href="{{ path('app_measurement_index') }}">Measurements</a> -->
+
+
+
 
         {% for location in locations %}
             <tr>
