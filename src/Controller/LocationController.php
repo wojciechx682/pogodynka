@@ -11,11 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/location')]
-// #[IsGranted('ROLE_USER')] // Require ROLE_ADMIN for all the actions of this controller
+#[IsGranted('ROLE_USER')]                                       // Require ROLE_USER for all the actions of this controller
 class LocationController extends AbstractController
 {
     #[Route('/', name: 'app_location_index', methods: ['GET'])]
     #[IsGranted('ROLE_LOCATION_INDEX')]
+    //#[IsGranted('ROLE_ADMIN')]
     public function index(LocationRepository $locationRepository): Response
     {
         return $this->render('location/index.html.twig', [
@@ -25,6 +26,7 @@ class LocationController extends AbstractController
 
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_LOCATION_NEW')]
+    //#[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, LocationRepository $locationRepository): Response
     {
         $location = new Location();
@@ -47,6 +49,7 @@ class LocationController extends AbstractController
 
     #[Route('/{id}', name: 'app_location_show', methods: ['GET'])]
     #[IsGranted('ROLE_LOCATION_SHOW')]
+    //#[IsGranted('ROLE_ADMIN')]
     public function show(Location $location): Response
     {
         return $this->render('location/show.html.twig', [
@@ -56,6 +59,7 @@ class LocationController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_location_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_LOCATION_EDIT')]
+    // #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Location $location, LocationRepository $locationRepository): Response
     {
         $form = $this->createForm(LocationType::class, $location, [
@@ -76,7 +80,8 @@ class LocationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_location_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_LOCATION_DELETE')]
+    //#[IsGranted('ROLE_LOCATION_DELETE')]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Location $location, LocationRepository $locationRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$location->getId(), $request->request->get('_token'))) {

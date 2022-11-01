@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/measurement')]
-// #[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_USER')]
 class MeasurementController extends AbstractController
 {
     #[Route('/', name: 'app_measurement_index', methods: ['GET'])]

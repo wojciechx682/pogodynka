@@ -3,17 +3,26 @@ security:
   # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    App\Entity\Jakub:
+      algorithm: auto
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   #providers:                              # Źródło pobieranych użytkowników
   #    users_in_memory: { memory: null }   # memory, entity, ldap, chain, własne
   #######################################################################################
+  #providers:
+  #  users_in_memory:
+  #    memory:
+  #      users:
+  #        admina: { password: '$2y$13$IkqsdXYcDykGTsqa0fMa6O.c8VkDX5VZgYyIRrGuVwGJfYCiePQ9e', roles: 'ROLE_ADMIN' } # password = zaq12wsx
+  #        user: { password: '$2y$13$y6YtsgYlQkk3GMW5hBxSBeZ7H6F6pDH2pyeYB8gLQvvvUsnGFscPm', roles: 'ROLE_USER' }   # password = zaq12wsx
+
+  #######################################################################################
   providers:
-    users_in_memory:
-      memory:
-        users:
-          admin: { password: '$2y$13$IkqsdXYcDykGTsqa0fMa6O.c8VkDX5VZgYyIRrGuVwGJfYCiePQ9e', roles: 'ROLE_ADMIN' } # password = zaq12wsx
-          user: { password: '$2y$13$y6YtsgYlQkk3GMW5hBxSBeZ7H6F6pDH2pyeYB8gLQvvvUsnGFscPm', roles: 'ROLE_USER' } # password = zaq12wsx
-          #super_admin: { password: '12345678' }
+    app_user_provider:
+      entity:
+        class: App\Entity\Jakub
+        property: email
+
   #######################################################################################
   firewalls:
     dev:
@@ -21,7 +30,8 @@ security:
       security: false
     main:
       lazy: true
-      provider: users_in_memory
+      #provider: users_in_memory
+      provider: app_user_provider
       #######################################################################################
       http_basic:
         realm: My Secured Area
@@ -38,22 +48,39 @@ security:
   access_control:                              # Sterowanie dostępem na poziomie adresów URL
     #######################################################################################
     #- { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: '^/measurement', roles: ROLE_ADMIN } # /measurement /weather
-    - { path: '^/location', roles: ROLE_USER } # /measurement /weather
+    #- { path: '^/measurement', roles: ROLE_ADMIN } # /measurement /weather
+    #- { path: '^/location', roles: [ROLE_USER, ROLE_ADMIN] } # /measurement /weather
+    #- { path: ^/location/\d+/edit, roles: ROLE_LOCATION_EDIT } # /measurement /weather
+    - { path: ^/location/new, roles: ROLE_LOCATION_NEW } # /measurement /weather
+    - { path: ^/location/\d+/edit, roles: ROLE_LOCATION_EDIT } # /measurement /weather
+    - { path: ^/location/\d+$, roles: ROLE_LOCATION_DELETE } # /measurement /weather
+    - { path: ^/measurement/new, roles: ROLE_MEASUREMENT_NEW } # /measurement /weather
+    - { path: ^/measurement/\d+/edit, roles: ROLE_MEASUREMENT_EDIT } # /measurement /weather
+    - { path: ^/measurement/\d+$, roles: ROLE_MEASUREMENT_DELETE } # /measurement /weather
+    # - { path: ^/location/new, roles: ROLE_ADMIN } # /measurement /weather
     # - { path: ^/profile, roles: ROLE_USER }
   role_hierarchy:
-    ROLE_ADMIN: [ ROLE_USER, ROLE_MEASUREMENT_EDIT, ROLE_MEASUREMENT_NEW, ROLE_MEASUREMENT_DELETE, ROLE_LOCATION_EDIT, ROLE_LOCATION_NEW, ROLE_LOCATION_DELETE]
-    #  - ROLE_MEASUREMENT_EDIT
-    #  - ROLE_MEASUREMENT_NEW
-    #  - ROLE_MEASUREMENT_DELETE
-    #  - ROLE_MEASUREMENT_INDEX
-    #  - ROLE_MEASUREMENT_SHOW
-    ROLE_USER: [ ROLE_MEASUREMENT_INDEX, ROLE_LOCATION_INDEX, ROLE_MEASUREMENT_SHOW, ROLE_LOCATION_SHOW ]
-    #  - ROLE_LOCATION_EDIT
-    #  - ROLE_LOCATION_NEW
-    #  - ROLE_LOCATION_DELETE
-    #  - ROLE_LOCATION_INDEX
-    #  - ROLE_LOCATION_SHOW
+    #ROLE_ADMIN: [ ROLE_USER, ROLE_MEASUREMENT_EDIT, ROLE_MEASUREMENT_NEW, ROLE_MEASUREMENT_DELETE, ROLE_LOCATION_EDIT, ROLE_LOCATION_NEW, ROLE_LOCATION_DELETE]
+    #ROLE_USER: [ ROLE_LOCATION_INDEX, ROLE_LOCATION_SHOW, ROLE_MEASUREMENT_INDEX, ROLE_MEASUREMENT_SHOW ]
+    ROLE_USER:
+      - ROLE_LOCATION_INDEX
+      - ROLE_LOCATION_SHOW
+      - ROLE_MEASUREMENT_INDEX
+      - ROLE_MEASUREMENT_SHOW
+    ROLE_ADMIN:
+      - ROLE_USER
+      - ROLE_MEASUREMENT_EDIT
+      - ROLE_MEASUREMENT_NEW
+      - ROLE_MEASUREMENT_DELETE
+      - ROLE_LOCATION_EDIT
+      - ROLE_LOCATION_NEW
+      - ROLE_LOCATION_DELETE
+
+      #  - ROLE_LOCATION_EDIT
+      #  - ROLE_LOCATION_NEW
+      #  - ROLE_LOCATION_DELETE
+      #  - ROLE_LOCATION_INDEX
+      #  - ROLE_LOCATION_SHOW
 
       #ROLE_ADMIN: [ ROLE_USER, ROLE_MEASUREMENT_EDIT, ]
       #ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
