@@ -33,8 +33,23 @@ security:
       #provider: users_in_memory
       provider: app_user_provider
       #######################################################################################
-      http_basic:
-        realm: My Secured Area
+      # logowanie za pomocą Formularza - form_login
+
+      form_login:
+        # "app_login" is the name of the route created previously
+        login_path: app_login
+        check_path: app_login
+
+      logout:
+        path: app_logout
+        # where to redirect after logout
+        # target: app_any_route
+
+
+
+      #######################################################################################
+      #http_basic:
+      #  realm: My Secured Area
       #######################################################################################
 
       # activate different ways to authenticate
@@ -45,36 +60,31 @@ security:
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
-  access_control:                              # Sterowanie dostępem na poziomie adresów URL
-    #######################################################################################
-    #- { path: ^/admin, roles: ROLE_ADMIN }
-    #- { path: '^/measurement', roles: ROLE_ADMIN } # /measurement /weather
-    #- { path: '^/location', roles: [ROLE_USER, ROLE_ADMIN] } # /measurement /weather
-    #- { path: ^/location/\d+/edit, roles: ROLE_LOCATION_EDIT } # /measurement /weather
-    - { path: ^/location/new, roles: ROLE_LOCATION_NEW } # /measurement /weather
-    - { path: ^/location/\d+/edit, roles: ROLE_LOCATION_EDIT } # /measurement /weather
-    - { path: ^/location/\d+$, roles: ROLE_LOCATION_DELETE } # /measurement /weather
-    - { path: ^/measurement/new, roles: ROLE_MEASUREMENT_NEW } # /measurement /weather
-    - { path: ^/measurement/\d+/edit, roles: ROLE_MEASUREMENT_EDIT } # /measurement /weather
-    - { path: ^/measurement/\d+$, roles: ROLE_MEASUREMENT_DELETE } # /measurement /weather
-    # - { path: ^/location/new, roles: ROLE_ADMIN } # /measurement /weather
-    # - { path: ^/profile, roles: ROLE_USER }
+  access_control:
+    - { path: ^/location/new, roles: ROLE_LOCATION_NEW }
+    - { path: ^/location/\d+/edit, roles: ROLE_LOCATION_EDIT }
+    - { path: ^/location/\d+$, roles: ROLE_LOCATION_DELETE }
+    - { path: ^/measurement/new, roles: ROLE_MEASUREMENT_NEW }
+    - { path: ^/measurement/\d+/edit, roles: ROLE_MEASUREMENT_EDIT }
+    - { path: ^/measurement/\d+$, roles: ROLE_MEASUREMENT_DELETE }
+
   role_hierarchy:
-    #ROLE_ADMIN: [ ROLE_USER, ROLE_MEASUREMENT_EDIT, ROLE_MEASUREMENT_NEW, ROLE_MEASUREMENT_DELETE, ROLE_LOCATION_EDIT, ROLE_LOCATION_NEW, ROLE_LOCATION_DELETE]
-    #ROLE_USER: [ ROLE_LOCATION_INDEX, ROLE_LOCATION_SHOW, ROLE_MEASUREMENT_INDEX, ROLE_MEASUREMENT_SHOW ]
-    ROLE_USER:
-      - ROLE_LOCATION_INDEX
-      - ROLE_LOCATION_SHOW
-      - ROLE_MEASUREMENT_INDEX
-      - ROLE_MEASUREMENT_SHOW
-    ROLE_ADMIN:
-      - ROLE_USER
-      - ROLE_MEASUREMENT_EDIT
-      - ROLE_MEASUREMENT_NEW
-      - ROLE_MEASUREMENT_DELETE
-      - ROLE_LOCATION_EDIT
-      - ROLE_LOCATION_NEW
-      - ROLE_LOCATION_DELETE
+    ROLE_ADMIN: [ ROLE_USER, ROLE_MEASUREMENT_EDIT, ROLE_MEASUREMENT_NEW, ROLE_MEASUREMENT_DELETE, ROLE_LOCATION_EDIT, ROLE_LOCATION_NEW, ROLE_LOCATION_DELETE]
+    ROLE_USER: [ ROLE_LOCATION_INDEX, ROLE_LOCATION_SHOW, ROLE_MEASUREMENT_INDEX, ROLE_MEASUREMENT_SHOW ]
+
+    #ROLE_USER:
+    #  - ROLE_LOCATION_INDEX
+    #  - ROLE_LOCATION_SHOW
+    #  - ROLE_MEASUREMENT_INDEX
+    #  - ROLE_MEASUREMENT_SHOW
+    #ROLE_ADMIN:
+    #  - ROLE_USER
+    #  - ROLE_MEASUREMENT_EDIT
+    #  - ROLE_MEASUREMENT_NEW
+    #  - ROLE_MEASUREMENT_DELETE
+    #  - ROLE_LOCATION_EDIT
+    #  - ROLE_LOCATION_NEW
+    #  - ROLE_LOCATION_DELETE
 
       #  - ROLE_LOCATION_EDIT
       #  - ROLE_LOCATION_NEW

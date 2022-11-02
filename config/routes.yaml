@@ -16,5 +16,13 @@ weather_in_city:
 #  path:       /measurement
 #  controller: App\Controller\MeasurementController:index
 
+#########################################################################
+# Wylogowanie użytkowników :
+
+# config/routes.yaml
+app_logout:
+  path: /logout
+  methods: GET
+
 
 
