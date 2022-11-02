@@ -80,8 +80,8 @@ class LocationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_location_delete', methods: ['POST'])]
-    //#[IsGranted('ROLE_LOCATION_DELETE')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_LOCATION_DELETE')]
+    //#[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Location $location, LocationRepository $locationRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$location->getId(), $request->request->get('_token'))) {
