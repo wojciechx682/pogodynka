@@ -39,6 +39,26 @@ class LocationRepository extends ServiceEntityRepository
         }
     }
 
+    // #######################################################################################
+
+    public function findOneBySomeField($value): ?Location
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.city = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    // #######################################################################################
+
+
+
+
+
+
+
 //    /**
 //     * @return Location[] Returns an array of Location objects
 //     */

@@ -8,6 +8,25 @@ weather_in_city:
   requirements:
     city: \d+
 
+# chce wyswietlic dane location (twig) - na podstawie podanej nazwy miasta (city) - STIRNG :
+
+location_data_city_name:
+  path: /weather/{cityName} #id
+  controller: App\Controller\WeatherController:cityNameAction
+#  requirements:
+#    city: \d+
+
+#########################################################################
+
+#weather_in_city:
+#  path: /weather/{cityName}
+#  controller: App\Controller\WeatherController:cityAction
+#  requirements:
+#    city: \d+
+
+#########################################################################
+
+
 #location_index:
 #  path:       /location
 #  controller: App\Controller\LocationController:index
@@ -23,6 +42,18 @@ weather_in_city:
 app_logout:
   path: /logout
   methods: GET
+
+
+#########################################################################
+# Serwisy :
+weather_highlander_forecast:
+  path: /highlander-says
+  controller: App\Controller\WeatherController::highlanderForecastAction
+
+# Serwisy :
+weather_util:
+  path: /highlander-util-says
+  controller: App\Controller\WeatherController::weatherUtilAction
 
 
 
