@@ -134,6 +134,20 @@ EOT
         ]);
     }
 
+    // ########################################################################################################
+    // Przyjmuje jako parametr ID (string) a nie ENCJĘ locaion (!)
+
+    #[Route('/weather-for-location2/{locationId}')]
+    public function weatherForLocationAction(Request $request, WeatherUtil $weatherUtil, $locationId): Response
+    {
+        return new JsonResponse($weatherUtil->getWeatherForLocation2($locationId));
+    }
+
+
+
+
+    // ########################################################################################################
+
 
 
 

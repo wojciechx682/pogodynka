@@ -124,6 +124,40 @@ class WeatherUtil
         return $result;
     }
 
+    // ###################################################################################
+
+    public function getWeatherForLocation2($locationId): array
+    {
+        $location = $this->locationRepository->find($locationId);
+        $measurements = $this->measurementRepository->findByLocation(
+            $location
+        );
+
+        $result = [
+            'name' => $location->getCity(),
+            'country' => $location->getCountry(),
+            'measurements' => [],
+        ];
+        foreach ($measurements as $measurement) {
+            $result['measurements'][] = [
+                'date' => $measurement->getDate()->format('Y-m-d'),
+                //'date_timestamp' => $measurement->getDate()->format('U'),
+                'celsius' => $measurement->getCelsius(),
+            ];
+        }
+
+        return $result;
+    }
+
+
+    // ###################################################################################
+
+
+
+
+
+
+
     /*// Ta druga funkcja - do pobierania pogody po nazwie - ma WYKORZYTAĆ FUNKCJĘ PO ENCJI :
     public function getWeatherForLocationnByName($cityName): array
     {
@@ -154,7 +188,9 @@ class WeatherUtil
 
         $locationid = $location->getId();
 
-        $result = $this->getWeatherForLocation($location);
+        //$result = $this->getWeatherForLocation($location);
+        $result = $this->getWeatherForLocation2($locationid); // wykorzystywane przez komendę
+
         return $result;
 
     }
