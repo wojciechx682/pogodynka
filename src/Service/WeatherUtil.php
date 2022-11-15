@@ -126,6 +126,7 @@ class WeatherUtil
 
     // ###################################################################################
 
+    // Używane przy Komendzie
     public function getWeatherForLocation2($locationId): array
     {
         $location = $this->locationRepository->find($locationId);
@@ -188,8 +189,8 @@ class WeatherUtil
 
         $locationid = $location->getId();
 
-        //$result = $this->getWeatherForLocation($location);
-        $result = $this->getWeatherForLocation2($locationid); // wykorzystywane przez komendę
+        $result = $this->getWeatherForLocation($location);
+        //$result = $this->getWeatherForLocation2($locationid); // wykorzystywane przez komendę
 
         return $result;
 
