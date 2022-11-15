@@ -135,8 +135,15 @@ class WeatherUtil
         );
 
         $result = [
+            'id' => $location->getId(),
+
+
             'name' => $location->getCity(),
             'country' => $location->getCountry(),
+
+            'latitude' => $location->getLatitude(),
+            'longitude' => $location->getLongitude(),
+
             'measurements' => [],
         ];
         foreach ($measurements as $measurement) {
@@ -189,8 +196,8 @@ class WeatherUtil
 
         $locationid = $location->getId();
 
-        $result = $this->getWeatherForLocation($location);
-        //$result = $this->getWeatherForLocation2($locationid); // wykorzystywane przez komendę
+        //$result = $this->getWeatherForLocation($location);
+        $result = $this->getWeatherForLocation2($locationid); // wykorzystywane przez komendę
 
         return $result;
 
